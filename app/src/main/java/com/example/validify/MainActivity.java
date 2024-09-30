@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText nameInput, emailInput, phoneInput;
+    private EditText nameInput, emailInput, phoneInput, pinInput;
     private Spinner positionSpinner;
     private Button submitBtn;
     private TextView errorText, resultText;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String NAME_REGEX = "^[a-zA-Z\\s]+$";
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String PHONE_REGEX = "^01[0-9]{9}$";
-
+    private static final String PIN_REGEX = "^[0-9]{3}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.nameInput);
         emailInput = findViewById(R.id.emailInput);
         phoneInput = findViewById(R.id.phoneInput);
+        pinInput = findViewById(R.id.pinInput);
         positionSpinner = findViewById(R.id.positionSpinner);
         submitBtn = findViewById(R.id.submitBtn);
         errorText = findViewById(R.id.errorText);
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         String name = nameInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
         String phone = phoneInput.getText().toString().trim();
+        String pin = pinInput.getText().toString().trim();
         String selectedPosition = positionSpinner.getSelectedItem().toString();
 
         errorText.setVisibility(View.GONE);
@@ -67,31 +69,33 @@ public class MainActivity extends AppCompatActivity {
         } else if (!Pattern.matches(NAME_REGEX, name)) {
             showError("Invalid name format. Only letters and spaces are allowed.");
             nameInput.requestFocus();
-        }
-        else if (email.isEmpty()) {
+        } else if (email.isEmpty()) {
             showError("Email is required.");
             emailInput.requestFocus();
         } else if (!Pattern.matches(EMAIL_REGEX, email)) {
             showError("Invalid email format.");
             emailInput.requestFocus();
-        }
-        else if (phone.isEmpty()) {
+        } else if (phone.isEmpty()) {
             showError("Phone number is required.");
             phoneInput.requestFocus();
         } else if (!Pattern.matches(PHONE_REGEX, phone)) {
-            showError("Invalid phone number. It must be 11 digits.");
+            showError("Invalid phone number. It must be 11 digits starting with '01'.");
             phoneInput.requestFocus();
-        }
-        else if (selectedPosition.equals("Select a Position")) {
+        } else if (pin.isEmpty()) {
+            showError("Pin number is required.");
+            pinInput.requestFocus();
+        } else if (!Pattern.matches(PIN_REGEX, pin)) {
+            showError("Invalid pin. It must be exactly 3 digits.");
+            pinInput.requestFocus();
+        } else if (selectedPosition.equals("Select a Position")) {
             showError("You must select a position.");
             positionSpinner.requestFocus();
-        }
-        else {
+        } else {
             inputLayout.setVisibility(View.GONE);
             outputLayout.setVisibility(View.VISIBLE);
 
             errorText.setVisibility(View.GONE);
-            String result = "Name: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\nPosition: " + selectedPosition;
+            String result = "Name: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\nPin: " + pin + "\nPosition: " + selectedPosition;
             resultText.setText(result);
         }
     }
