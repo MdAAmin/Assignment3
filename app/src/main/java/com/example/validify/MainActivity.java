@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText nameInput, emailInput, phoneInput, pinInput;
     private Spinner positionSpinner;
-    private Button submitBtn;
     private TextView errorText, resultText;
     private LinearLayout inputLayout, outputLayout;
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         phoneInput = findViewById(R.id.phoneInput);
         pinInput = findViewById(R.id.pinInput);
         positionSpinner = findViewById(R.id.positionSpinner);
-        submitBtn = findViewById(R.id.submitBtn);
+        Button submitBtn = findViewById(R.id.submitBtn);
         errorText = findViewById(R.id.errorText);
         resultText = findViewById(R.id.resultText);
         inputLayout = findViewById(R.id.inputLayout);
@@ -45,12 +44,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         positionSpinner.setAdapter(adapter);
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateForm();
-            }
-        });
+        submitBtn.setOnClickListener(v -> validateForm());
     }
 
     private void validateForm() {
