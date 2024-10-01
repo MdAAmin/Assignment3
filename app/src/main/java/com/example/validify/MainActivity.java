@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String NAME_REGEX = "^[a-zA-Z\\s]+$";
     private static final String EMAIL_REGEX = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$";
-    private static final String PHONE_REGEX = "^01[0-9]{9}$";
+    private static final String PHONE_REGEX = "^01[3456789][0-9]{8}$";
     private static final String PIN_REGEX = "^[0-9]{3}$";
 
     @Override
